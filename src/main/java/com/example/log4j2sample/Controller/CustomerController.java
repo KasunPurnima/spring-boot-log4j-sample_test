@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -27,7 +28,10 @@ public class CustomerController {
     @Autowired
     private Environment environment;
 
-    String baseUrl = System.getenv("BASEURL");
+    @Value("${baseUrl}")
+    private String baseUrl;
+
+  //  String baseUrl = System.getenv("BASEURL");
 
     private static final Logger logger = LogManager.getLogger(Log4jSampleApplication.class);
 
@@ -52,9 +56,10 @@ public class CustomerController {
 
         logger.info("callAccountDetailsEndpoint--" + accountNo);
         logger.info("baseUrl--" + baseUrl);
+        System.out.println(baseUrl);
         RestTemplate restTemplate = new RestTemplate();
         // String baseUrl = "http://localhost:8990/bank/accounts";
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(baseUrl + "/zzz/")
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(baseUrl + "/getAccountDetailsByNumber/")
                 .path(accountNo);
         logger.info("Full set URL--" + builder.toUriString());
         ResponseEntity<String> response = restTemplate.exchange(

@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: bank-service-v15
+opentracing:
+  jaeger:
+    service-name: bank-service-v15
+    enable: true
+    udp-sender:
+      host:  localhost
+      #port: 16686
+  sampler:
+    type: const
+    param: 1
+server:
+  error:
+    whitelabel:
+      enabled: false
+  port: 8090
+  servlet:
+    context-path: /customer
+
+
+baseUrl: http://localhost:9595/bank/accounts/
+#subbaseUrl: http://localhost:8090/update-service/
